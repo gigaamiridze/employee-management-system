@@ -1,3 +1,16 @@
 spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ems
+    username: root
+    password: root
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+        dialect: org.hibernate.dialect.PostgreSQLDialect
   profiles:
     active: dev
