@@ -22,4 +22,9 @@ public class EmployeeControllerImpl implements EmployeeController {
     public ResponseEntity<EmployeeResponse> createEmployee(EmployeeDto employeeDto) {
         return employeeService.createEmployee(employeeDto);
     }
+
+    @Override
+    public ResponseEntity<EmployeeResponse> getEmployeeById(Long employeeId) {
+        return employeeService.getEmployeeById(employeeId);
+    }
 }

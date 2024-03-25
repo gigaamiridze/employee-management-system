@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Slf4j
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -38,6 +40,26 @@ public class EmployeeServiceImpl implements EmployeeService {
             return ResponseEntity
                     .status(HttpStatus.CREATED)
                     .body(new EmployeeResponse(true, "Employee created successfully", EmployeeMapper.mapToDto(savedEmployee)));
+        } catch (Exception ex) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new EmployeeResponse(false, "Internal server error", null));
+        }
+    }
+
+    @Override
+    public ResponseEntity<EmployeeResponse> getEmployeeById(Long employeeId) {
+        try {
+            Optional<Employee> employee = employeeRepository.findById(employeeId);
+            if (!employee.isPresent()) {
+                return ResponseEntity
+                        .status(HttpStatus.NOT_FOUND)
+                        .body(new EmployeeResponse(false, "Employee not found with ID: " + employeeId, null));
+            }
+
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(new EmployeeResponse(true, "Employee retrieved successfully", EmployeeMapper.mapToDto(employee.get())));
         } catch (Exception ex) {
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)

@@ -7,4 +7,6 @@ import org.springframework.http.ResponseEntity;
 public interface EmployeeService {
 
     ResponseEntity<EmployeeResponse> createEmployee(EmployeeDto employeeDto);
+
+    ResponseEntity<EmployeeResponse> getEmployeeById(Long employeeId);
 }
