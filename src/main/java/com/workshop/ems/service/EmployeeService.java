@@ -9,4 +9,6 @@ public interface EmployeeService {
     ResponseEntity<EmployeeResponse> createEmployee(EmployeeDto employeeDto);
 
     ResponseEntity<EmployeeResponse> getEmployeeById(Long employeeId);
+
+    ResponseEntity<EmployeeResponse> getAllEmployee(int pageNumber, int pageSize);
 }

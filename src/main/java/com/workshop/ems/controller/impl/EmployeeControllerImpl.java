@@ -27,4 +27,9 @@ public class EmployeeControllerImpl implements EmployeeController {
     public ResponseEntity<EmployeeResponse> getEmployeeById(Long employeeId) {
         return employeeService.getEmployeeById(employeeId);
     }
+
+    @Override
+    public ResponseEntity<EmployeeResponse> getAllEmployee(int pageNumber, int pageSize) {
+        return employeeService.getAllEmployee(pageNumber, pageSize);
+    }
 }

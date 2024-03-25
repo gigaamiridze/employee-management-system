@@ -4,15 +4,20 @@ import com.workshop.ems.dto.EmployeeDto;
 import com.workshop.ems.entity.Employee;
 import com.workshop.ems.mapper.EmployeeMapper;
 import com.workshop.ems.model.EmployeeResponse;
+import com.workshop.ems.model.PageableResponse;
 import com.workshop.ems.repository.EmployeeRepository;
 import com.workshop.ems.service.EmployeeService;
 import io.micrometer.common.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -60,6 +65,35 @@ public class EmployeeServiceImpl implements EmployeeService {
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .body(new EmployeeResponse(true, "Employee retrieved successfully", EmployeeMapper.mapToDto(employee.get())));
+        } catch (Exception ex) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new EmployeeResponse(false, "Internal server error", null));
+        }
+    }
+
+    @Override
+    public ResponseEntity<EmployeeResponse> getAllEmployee(int pageNumber, int pageSize) {
+        try {
+            Pageable pageable = PageRequest.of(pageNumber, pageSize);
+            Page<Employee> employees = employeeRepository.findAll(pageable);
+            List<Employee> listOfEmployee = employees.getContent();
+            List<EmployeeDto> content = listOfEmployee.stream().map(EmployeeMapper::mapToDto).toList();
+
+            PageableResponse<EmployeeDto> pageableResponse = new PageableResponse<>(
+                    content,
+                    employees.getNumber(),
+                    employees.getSize(),
+                    employees.getTotalPages(),
+                    employees.getTotalElements(),
+                    employees.isFirst(),
+                    employees.isLast(),
+                    employees.isEmpty()
+            );
+
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(new EmployeeResponse(true, "Employees retrieved successfully", pageableResponse));
         } catch (Exception ex) {
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
