@@ -101,6 +101,40 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
     }
 
+    @Override
+    public ResponseEntity<EmployeeResponse> updateEmployee(Long employeeId, EmployeeDto employeeDto) {
+        try {
+            if (isInvalidEmployeeData(employeeDto)) {
+                return ResponseEntity
+                        .status(HttpStatus.BAD_REQUEST)
+                        .body(new EmployeeResponse(false, "Invalid employee data", null));
+            }
+
+            Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);
+            if (!employeeOptional.isPresent()) {
+                return ResponseEntity
+                        .status(HttpStatus.NOT_FOUND)
+                        .body(new EmployeeResponse(false, "Employee not found with ID: " + employeeId, null));
+            }
+
+            Employee employee = employeeOptional.get();
+            employee.setFirstName(employeeDto.getFirstName());
+            employee.setLastName(employeeDto.getLastName());
+            employee.setEmail(employeeDto.getEmail());
+
+            Employee updatedEmployee = employeeRepository.save(employee);
+            log.info("Employee updated successfully: {}", updatedEmployee);
+
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(new EmployeeResponse(true, "Employee updated successfully", EmployeeMapper.mapToDto(updatedEmployee)));
+        } catch (Exception ex) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new EmployeeResponse(false, "Internal server error", null));
+        }
+    }
+
     private boolean isInvalidEmployeeData(EmployeeDto employeeDto) {
         return StringUtils.isEmpty(employeeDto.getFirstName()) || StringUtils.isEmpty(employeeDto.getLastName()) || StringUtils.isEmpty(employeeDto.getEmail());
     }

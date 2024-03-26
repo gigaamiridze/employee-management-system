@@ -32,4 +32,9 @@ public class EmployeeControllerImpl implements EmployeeController {
     public ResponseEntity<EmployeeResponse> getAllEmployee(int pageNumber, int pageSize) {
         return employeeService.getAllEmployee(pageNumber, pageSize);
     }
+
+    @Override
+    public ResponseEntity<EmployeeResponse> updateEmployee(Long employeeId, EmployeeDto employeeDto) {
+        return employeeService.updateEmployee(employeeId, employeeDto);
+    }
 }
