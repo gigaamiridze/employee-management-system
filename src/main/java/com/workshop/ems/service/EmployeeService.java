@@ -15,4 +15,6 @@ public interface EmployeeService {
     ResponseEntity<EmployeeResponse> updateEmployee(Long employeeId, EmployeeDto employeeDto);
 
     ResponseEntity<EmployeeResponse> deleteEmployee(Long employeeId);
+
+    ResponseEntity<EmployeeResponse> deleteAllEmployee();
 }

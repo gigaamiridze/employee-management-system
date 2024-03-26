@@ -42,4 +42,9 @@ public class EmployeeControllerImpl implements EmployeeController {
     public ResponseEntity<EmployeeResponse> deleteEmployee(Long employeeId) {
         return employeeService.deleteEmployee(employeeId);
     }
+
+    @Override
+    public ResponseEntity<EmployeeResponse> deleteAllEmployee() {
+        return employeeService.deleteAllEmployee();
+    }
 }

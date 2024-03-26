@@ -32,4 +32,7 @@ public interface EmployeeController {
 
     @DeleteMapping("/{employeeId}")
     ResponseEntity<EmployeeResponse> deleteEmployee(@PathVariable Long employeeId);
+
+    @DeleteMapping("/delete-all")
+    ResponseEntity<EmployeeResponse> deleteAllEmployee();
 }

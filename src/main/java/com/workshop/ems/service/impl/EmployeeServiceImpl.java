@@ -159,6 +159,29 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
     }
 
+    @Override
+    public ResponseEntity<EmployeeResponse> deleteAllEmployee() {
+        try {
+            List<Employee> employees = employeeRepository.findAll();
+            if (employees.isEmpty()) {
+                return ResponseEntity
+                        .status(HttpStatus.NO_CONTENT)
+                        .body(new EmployeeResponse(false, "No employees found to delete", null));
+            }
+
+            employeeRepository.deleteAll();
+            log.info("All employee deleted successfully");
+
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(new EmployeeResponse(true, "All employee deleted successfully", null));
+        } catch (Exception ex) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new EmployeeResponse(false, "Internal server error", null));
+        }
+    }
+
     private boolean isInvalidEmployeeData(EmployeeDto employeeDto) {
         return StringUtils.isEmpty(employeeDto.getFirstName()) || StringUtils.isEmpty(employeeDto.getLastName()) || StringUtils.isEmpty(employeeDto.getEmail());
     }
