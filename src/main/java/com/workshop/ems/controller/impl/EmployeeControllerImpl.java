@@ -37,4 +37,9 @@ public class EmployeeControllerImpl implements EmployeeController {
     public ResponseEntity<EmployeeResponse> updateEmployee(Long employeeId, EmployeeDto employeeDto) {
         return employeeService.updateEmployee(employeeId, employeeDto);
     }
+
+    @Override
+    public ResponseEntity<EmployeeResponse> deleteEmployee(Long employeeId) {
+        return employeeService.deleteEmployee(employeeId);
+    }
 }

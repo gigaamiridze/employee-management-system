@@ -3,6 +3,7 @@ package com.workshop.ems.controller;
 import com.workshop.ems.dto.EmployeeDto;
 import com.workshop.ems.model.EmployeeResponse;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,4 +29,7 @@ public interface EmployeeController {
 
     @PutMapping("/{employeeId}")
     ResponseEntity<EmployeeResponse> updateEmployee(@PathVariable Long employeeId, @RequestBody EmployeeDto employeeDto);
+
+    @DeleteMapping("/{employeeId}")
+    ResponseEntity<EmployeeResponse> deleteEmployee(@PathVariable Long employeeId);
 }
