@@ -1,7 +1,8 @@
 package com.workshop.ems.controller;
 
 import com.workshop.ems.dto.EmployeeDto;
-import com.workshop.ems.model.EmployeeResponse;
+import com.workshop.ems.entity.Employee;
+import com.workshop.ems.model.PageableResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,23 +17,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface EmployeeController {
 
     @PostMapping("/create")
-    ResponseEntity<EmployeeResponse> createEmployee(@RequestBody EmployeeDto employeeDto);
+    ResponseEntity<EmployeeDto> createEmployee(@RequestBody EmployeeDto employeeDto);
 
     @GetMapping("/{employeeId}")
-    ResponseEntity<EmployeeResponse> getEmployeeById(@PathVariable Long employeeId);
+    ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable Long employeeId);
 
     @GetMapping
-    ResponseEntity<EmployeeResponse> getAllEmployee(
+    ResponseEntity<PageableResponse<Employee>> getAllEmployee(
             @RequestParam(value = "pageNumber", defaultValue = "", required = false) int pageNumber,
             @RequestParam(value = "pageSize", defaultValue = "", required = false) int pageSize
     );
 
     @PutMapping("/{employeeId}")
-    ResponseEntity<EmployeeResponse> updateEmployee(@PathVariable Long employeeId, @RequestBody EmployeeDto employeeDto);
+    ResponseEntity<EmployeeDto> updateEmployee(@PathVariable Long employeeId, @RequestBody EmployeeDto employeeDto);
 
     @DeleteMapping("/{employeeId}")
-    ResponseEntity<EmployeeResponse> deleteEmployee(@PathVariable Long employeeId);
+    ResponseEntity<Void> deleteEmployee(@PathVariable Long employeeId);
 
     @DeleteMapping("/delete-all")
-    ResponseEntity<EmployeeResponse> deleteAllEmployee();
+    ResponseEntity<Void> deleteAllEmployee();
 }

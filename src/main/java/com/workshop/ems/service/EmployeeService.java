@@ -1,20 +1,19 @@
 package com.workshop.ems.service;
 
-import com.workshop.ems.dto.EmployeeDto;
-import com.workshop.ems.model.EmployeeResponse;
-import org.springframework.http.ResponseEntity;
+import com.workshop.ems.entity.Employee;
+import com.workshop.ems.model.PageableResponse;
 
 public interface EmployeeService {
 
-    ResponseEntity<EmployeeResponse> createEmployee(EmployeeDto employeeDto);
+    Employee createEmployee(Employee employee);
 
-    ResponseEntity<EmployeeResponse> getEmployeeById(Long employeeId);
+    Employee getEmployeeById(Long employeeId);
 
-    ResponseEntity<EmployeeResponse> getAllEmployee(int pageNumber, int pageSize);
+    PageableResponse<Employee> getAllEmployee(int pageNumber, int pageSize);
 
-    ResponseEntity<EmployeeResponse> updateEmployee(Long employeeId, EmployeeDto employeeDto);
+    Employee updateEmployee(Long employeeId, Employee employeeInfo);
 
-    ResponseEntity<EmployeeResponse> deleteEmployee(Long employeeId);
+    void deleteEmployee(Long employeeId);
 
-    ResponseEntity<EmployeeResponse> deleteAllEmployee();
+    void deleteAllEmployee();
 }

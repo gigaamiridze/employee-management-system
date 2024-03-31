@@ -2,26 +2,21 @@ package com.workshop.ems.mapper;
 
 import com.workshop.ems.dto.EmployeeDto;
 import com.workshop.ems.entity.Employee;
-import org.springframework.stereotype.Service;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
-@Service
-public class EmployeeMapper {
+@Mapper
+public abstract class EmployeeMapper {
 
-    public static Employee mapToEntity(EmployeeDto employeeDto) {
-        return Employee.builder()
-                .id(employeeDto.getId())
-                .firstName(employeeDto.getFirstName())
-                .lastName(employeeDto.getLastName())
-                .email(employeeDto.getEmail())
-                .build();
-    }
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "firstName", source = "firstName")
+    @Mapping(target = "lastName", source = "lastName")
+    @Mapping(target = "email", source = "email")
+    public abstract Employee mapToEntity(EmployeeDto employeeDto);
 
-    public static EmployeeDto mapToDto(Employee employee) {
-        return EmployeeDto.builder()
-                .id(employee.getId())
-                .firstName(employee.getFirstName())
-                .lastName(employee.getLastName())
-                .email(employee.getEmail())
-                .build();
-    }
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "firstName", source = "firstName")
+    @Mapping(target = "lastName", source = "lastName")
+    @Mapping(target = "email", source = "email")
+    public abstract EmployeeDto mapToDto(Employee employee);
 }
