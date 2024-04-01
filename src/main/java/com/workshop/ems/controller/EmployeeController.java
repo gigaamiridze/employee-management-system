@@ -3,6 +3,7 @@ package com.workshop.ems.controller;
 import com.workshop.ems.dto.EmployeeDto;
 import com.workshop.ems.entity.Employee;
 import com.workshop.ems.model.PageableResponse;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface EmployeeController {
 
     @PostMapping("/create")
-    ResponseEntity<EmployeeDto> createEmployee(@RequestBody EmployeeDto employeeDto);
+    ResponseEntity<EmployeeDto> createEmployee(@Valid @RequestBody EmployeeDto employeeDto);
 
     @GetMapping("/{employeeId}")
     ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable Long employeeId);
@@ -29,7 +30,7 @@ public interface EmployeeController {
     );
 
     @PutMapping("/{employeeId}")
-    ResponseEntity<EmployeeDto> updateEmployee(@PathVariable Long employeeId, @RequestBody EmployeeDto employeeDto);
+    ResponseEntity<EmployeeDto> updateEmployee(@PathVariable Long employeeId, @Valid @RequestBody EmployeeDto employeeDto);
 
     @DeleteMapping("/{employeeId}")
     ResponseEntity<Void> deleteEmployee(@PathVariable Long employeeId);
